@@ -7,10 +7,18 @@ import Search from './Search.jsx'
 class App extends Component {
   state = {
     // add attributes here
+    cats:[]
   }
 
   componentDidMount() {
     // write a GET fetch request here to get all the cats
+    fetch("http://localhost:3000/cats")
+    .then(resp=>resp.json())
+    .then(arrayOfCats=>{
+      this.setState({
+        cats:arrayOfCats
+      })
+    })
   }
 
   changeSearchTerm = () => {
@@ -34,8 +42,8 @@ class App extends Component {
       <>
         <h1>Cats galore!</h1>
         <Search/>
-        <CatsContainer/>
-        <Form/>
+        <CatsContainer cats={this.state.cats}/>
+        <Form addNewCat={this.addNewCat}/>
       </>
     )
   }
